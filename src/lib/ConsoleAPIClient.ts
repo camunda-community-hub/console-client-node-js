@@ -5,8 +5,6 @@ import { Cluster, ClusterClient, ClusterClientConnectionDetails, CreateClusterBo
 const pkg = require('../../package.json')
 const debug = require('debug')('consoleapi')
 
-jest.setTimeout(10000)
-
 export class ConsoleApiClient {
     private userAgentString: string
     private gotOptions: { prefixUrl: string }
@@ -16,9 +14,9 @@ export class ConsoleApiClient {
         this.userAgentString =  `console-client-nodejs/${pkg.version}${customAgent}`
         const creds = getConsoleCredentials()
         this.gotOptions = {
-            prefixUrl: `${creds.CAMUNDA_CONSOLE_BASE_URL}/customer-api/clusters`
+            prefixUrl: `${creds.CAMUNDA_CONSOLE_BASE_URL}/clusters`
         }
-        debug('prefixUrl', `${creds.CAMUNDA_CONSOLE_BASE_URL}/customer-api/clusters`)
+        debug('prefixUrl', `${creds.CAMUNDA_CONSOLE_BASE_URL}/clusters`)
     }
 
     private async getHeaders() {

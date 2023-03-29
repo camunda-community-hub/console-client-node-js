@@ -1,5 +1,7 @@
 import {ConsoleApiClient} from '../index'
 
+jest.setTimeout(10000)
+
 test('getParameters', async () => {
     const c = new ConsoleApiClient()
     const res = await c.getParameters()
