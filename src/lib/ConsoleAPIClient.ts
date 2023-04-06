@@ -20,12 +20,13 @@ export class ConsoleApiClient {
     }
 
     private async getHeaders() {
-        return {
+        const headers = {
             'content-type': 'application/json',
             'authorization': `Bearer ${await getConsoleToken(this.userAgentString)}`,
             'user-agent': this.userAgentString,
             'accept': '*/*'
-        }       
+        }    
+        return headers   
     }
 
     /**
@@ -44,14 +45,15 @@ export class ConsoleApiClient {
 
     /**
      * @description Create a new API client for a cluster. See [the API Documentation](https://console.cloud.camunda.io/customer-api/openapi/docs/#/default/CreateClient) for more details.
-     * @param clusterUuid - The cluster UUID
-     * @param clientName - The name for the new API client
      * @returns 
      */
-    async createClient(clusterUuid: string, clientName: string): Promise<CreatedClusterClient> {
+    async createClient(req: { clusterUuid: string, clientName: string, permissions: string[] }): Promise<CreatedClusterClient> {
         const headers = await this.getHeaders()
-        return got.post(`${clusterUuid}/clients`, {
-            body: JSON.stringify({clientName}),
+        return got.post(`${req.clusterUuid}/clients`, {
+            body: JSON.stringify({
+                clientName: req.clientName, 
+                permissions: req.permissions
+            }),
             headers,
             ...this.gotOptions
         }).json()
@@ -102,11 +104,13 @@ export class ConsoleApiClient {
      */
     async createCluster(createClusterRequest: CreateClusterBody): Promise<{clusterId: string}> {
         const headers = await this.getHeaders()
-        return got.post('', {
+        const req =  {
             body: JSON.stringify(createClusterRequest),
             headers,
             ...this.gotOptions
-        }).json()
+        }
+        debug(req)
+        return got.post('', req).json()
     }
 
     /**
@@ -145,5 +149,39 @@ export class ConsoleApiClient {
             headers,
             ...this.gotOptions
         }).json()
+    }
+
+    async getSecrets(clusterUuid: string): Promise<{[key: string]: string}> {
+        const headers = await this.getHeaders()
+        return got(`${clusterUuid}/secrets`, {
+            headers,
+            ...this.gotOptions
+        }).json()
+    }
+
+    async createSecret({
+        clusterUuid, 
+        secretName, 
+        secretValue
+    }: { 
+            clusterUuid: string, 
+            secretName: string, 
+            secretValue: string 
+    }): Promise<null> {
+        const headers = await this.getHeaders()
+        const req =  {
+            body: JSON.stringify({secretName, secretValue}),
+            headers,
+            ...this.gotOptions
+        }
+        return got.post(`${clusterUuid}/secrets`, req).json()
+    }
+
+    async deleteSecret(clusterUuid: string, secretName: string): Promise<null> {
+        const headers = await this.getHeaders()
+        return got.delete(`${clusterUuid}/secrets/${secretName}`, {
+            headers,
+            ...this.gotOptions
+        }).json()        
     }
 } 

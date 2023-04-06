@@ -68,11 +68,11 @@ export interface Cluster {
 }
 
 export interface CreateClusterBody {
-    name: "string"
-    planTypeId: "string"
-    channelId: "string"
-    generationId: "string"
-    regionId: "string"
+    name: string
+    planTypeId: string
+    channelId: string
+    generationId: string
+    regionId: string
   }
 
 export interface Parameters {
@@ -80,28 +80,28 @@ export interface Parameters {
       {
         "allowedGenerations": [
           {
-            "name": "string",
-            "uuid": "string"
+            "name": string,
+            "uuid": string
           }
         ],
         "defaultGeneration": {
-          "name": "string",
-          "uuid": "string"
+          "name": string,
+          "uuid": string
         },
-        "name": "string",
-        "uuid": "string"
+        "name": string,
+        "uuid": string
       }
     ],
     "clusterPlanTypes": [
       {
-        "name": "string",
-        "uuid": "string"
+        "name": string,
+        "uuid": string
       }
     ],
     "regions": [
       {
-        "name": "string",
-        "uuid": "string"
+        "name": string,
+        "uuid": string
       }
     ]
 }
