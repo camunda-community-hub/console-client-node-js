@@ -151,6 +151,10 @@ export class ConsoleApiClient {
         }).json()
     }
 
+    /**
+     * 
+     * @description Retrieve the connector secrets. See [the API Documentation](https://console.cloud.camunda.io/customer-api/openapi/docs/#/default/GetSecrets) for more details. 
+     */
     async getSecrets(clusterUuid: string): Promise<{[key: string]: string}> {
         const headers = await this.getHeaders()
         return got(`${clusterUuid}/secrets`, {
@@ -159,6 +163,10 @@ export class ConsoleApiClient {
         }).json()
     }
 
+    /**
+     * 
+     * @description Create a new connector secret. See [the API Documentation](https://console.cloud.camunda.io/customer-api/openapi/docs/#/default/CreateSecret) for more details. 
+     */
     async createSecret({
         clusterUuid, 
         secretName, 
@@ -177,11 +185,36 @@ export class ConsoleApiClient {
         return got.post(`${clusterUuid}/secrets`, req).json()
     }
 
+    /**
+     * 
+     * @description Delete a connector secret. See [the API Documentation](https://console.cloud.camunda.io/customer-api/openapi/docs/#/default/DeleteSecret) for more details. 
+     */
     async deleteSecret(clusterUuid: string, secretName: string): Promise<null> {
         const headers = await this.getHeaders()
         return got.delete(`${clusterUuid}/secrets/${secretName}`, {
             headers,
             ...this.gotOptions
         }).json()        
+    }
+
+    /**
+     * 
+     * @description Add one or more IPs to the whitelist for the cluster. See [the API Documentation](https://console.cloud.camunda.io/customer-api/openapi/docs/#/default/UpdateIpWhitelist) for more details.
+     * @param ipwhitelist 
+     * @returns 
+     */
+    async whitelistIPs(clusterUuid: string, ipwhitelist: [{
+        description: string,
+        ip: string
+    }]) {
+        const headers = await this.getHeaders()
+        return got.put(`${clusterUuid}/ipwhitelist`,
+            {
+                body: JSON.stringify({
+                    ipwhitelist
+                }),
+                headers,
+                ...this.gotOptions
+            }).json()
     }
 } 
