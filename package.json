@@ -18,7 +18,7 @@
   "bugs": {
     "url": "https://github.com/camunda-community-hub/console-client-node-js/issues"
   },
-  "homepage": "https://github.com/camunda-community-hub/console-client-node-js#readme",
+  "homepage": "https://camunda-community-hub.github.io/console-client-node-js/",
   "devDependencies": {
     "@types/jest": "^29.5.0",
     "jest": "^29.5.0",
