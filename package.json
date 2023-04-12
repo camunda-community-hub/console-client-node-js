@@ -1,6 +1,6 @@
 {
   "name": "camunda-console-client",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "description": "A Node.js Camunda 8 Web Console API client",
   "main": "dist/index.js",
   "scripts": {
