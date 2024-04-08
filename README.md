@@ -1,7 +1,10 @@
 # console-client-node-js
 
 The Camunda 8 Web Console API client for Node.js.
+# DEPRECATED
 
+This package is deprecated. Please use the official SDK package @camunda8/sdk. See: https://github.com/camunda/camunda-8-js-sdk
+---
 ## Installation
 
 
